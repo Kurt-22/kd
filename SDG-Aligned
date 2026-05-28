@@ -18,7 +18,7 @@ namespace ConsoleApp2
 
                 while (choice != 5)
                 {
-                    Console.WriteLine("\n===== DICTIONARY  (SDG-4) =====");
+                    Console.WriteLine("\n===== Self-note (SDG-4) =====");
                     Console.WriteLine("1. Add Word");
                     Console.WriteLine("2. View Latest Word");
                     Console.WriteLine("3. Remove Latest Word");
