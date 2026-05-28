@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,95 +10,108 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-           
-            
-                // Create the dictionary
-                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                // Stack
+                Stack<Dictionary<string, string>> dictionaryStack =
+                    new Stack<Dictionary<string, string>>();
 
                 int choice = 0;
 
-                // Loop until user chooses Exit
-                while (choice != 4)
+                while (choice != 5)
                 {
-                    Console.WriteLine("\n=====  KD's Knowledge =====");
+                    Console.WriteLine("\n===== DICTIONARY  (SDG-4) =====");
                     Console.WriteLine("1. Add Word");
-                    Console.WriteLine("2. Search Word");
-                    Console.WriteLine("3. Display All Words");
-                    Console.WriteLine("4. Exit");
-                    Console.Write("Enter your choice: ");
+                    Console.WriteLine("2. View Latest Word");
+                    Console.WriteLine("3. Remove Latest Word");
+                    Console.WriteLine("4. Display All Words");
+                    Console.WriteLine("5. Exit");
+
+                    Console.Write("Enter choice: ");
                     choice = Convert.ToInt32(Console.ReadLine());
 
+                    // ADD WORD
                     if (choice == 1)
                     {
+                        Dictionary<string, string> wordData =
+                            new Dictionary<string, string>();
+
                         Console.Write("Enter word: ");
                         string word = Console.ReadLine();
 
                         Console.Write("Enter meaning: ");
                         string meaning = Console.ReadLine();
 
-                        // Check if word already exists
-                        if (!dictionary.ContainsKey(word))
-                        {
-                            dictionary.Add(word, meaning);
-                            Console.WriteLine("Word added successfully!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Word already exists.");
-                        }
+                        wordData.Add(word, meaning);
+
+                        dictionaryStack.Push(wordData);
+
+                        Console.WriteLine("Word added to stack.");
                     }
 
+                    // VIEW LATEST WORD
                     else if (choice == 2)
                     {
-                        Console.Write("Enter word to search: ");
-                        string searchWord = Console.ReadLine();
+                        if (dictionaryStack.Count > 0)
+                        {
+                            Dictionary<string, string> latestWord =
+                                dictionaryStack.Peek();
 
-                        // Check if word exists
-                        if (dictionary.ContainsKey(searchWord))
-                        {
-                            Console.WriteLine("Meaning: " + dictionary[searchWord]);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Word not found.");
-                        }
-                    }
-
-                    else if (choice == 3)
-                    {
-                        Console.WriteLine("\n--- Dictionary Words ---");
-
-                        if (dictionary.Count == 0)
-                        {
-                            Console.WriteLine("Dictionary is empty.");
-                        }
-                        else
-                        {
-                           
-                            foreach (KeyValuePair<string, string> item in dictionary)
+                            foreach (KeyValuePair<string, string> item in latestWord)
                             {
+                                Console.WriteLine("\nLatest Word:");
                                 Console.WriteLine(item.Key + " = " + item.Value);
                             }
                         }
+                        else
+                        {
+                            Console.WriteLine("Stack is empty.");
+                        }
                     }
 
+                    // REMOVE LATEST WORD
+                    else if (choice == 3)
+                    {
+                        if (dictionaryStack.Count > 0)
+                        {
+                            dictionaryStack.Pop();
+                            Console.WriteLine("Latest word removed.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Stack is empty.");
+                        }
+                    }
+
+                    // DISPLAY ALL WORDS
                     else if (choice == 4)
+                    {
+                        if (dictionaryStack.Count > 0)
+                        {
+                            Console.WriteLine("\n--- All Words in Stack ---");
+
+                            foreach (Dictionary<string, string> data in dictionaryStack)
+                            {
+                                foreach (KeyValuePair<string, string> item in data)
+                                {
+                                    Console.WriteLine(item.Key + " = " + item.Value);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Stack is empty.");
+                        }
+                    }
+
+                    else if (choice == 5)
                     {
                         Console.WriteLine("Program exited.");
                     }
 
                     else
                     {
-                        Console.WriteLine("Invalid choice. Try again.");
+                        Console.WriteLine("Invalid choice.");
                     }
                 }
-            
+            }
         }
-
-
-
-
-
     }
-}
-
